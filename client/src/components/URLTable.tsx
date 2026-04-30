@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { apiService, URL } from '../services/api';
+import { apiService } from '../services/api';
+import type { URL } from '../services/api';
 
 export default function URLTable() {
   const [urls, setUrls] = useState<URL[]>([]);

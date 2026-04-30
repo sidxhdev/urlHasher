@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { apiService, CreateURLResponse } from '../services/api';
+import { apiService } from '../services/api';
+import type { CreateURLResponse } from '../services/api';
 
 interface URLInputProps {
   onURLCreated: (response: CreateURLResponse) => void;

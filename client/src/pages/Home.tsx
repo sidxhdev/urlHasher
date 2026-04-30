@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import URLInput from '../components/URLInput';
 import URLTable from '../components/URLTable';
-import { CreateURLResponse } from '../services/api';
+import type { CreateURLResponse } from '../services/api';
 
 export default function Home() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
