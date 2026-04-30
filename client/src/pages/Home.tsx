@@ -21,9 +21,9 @@ export default function Home() {
 
         <URLInput onURLCreated={handleURLCreated} />
 
-        <div key={refreshTrigger} className="my-8 md:my-12" />
+        <div className="my-8 md:my-12" />
 
-        <URLTable />
+        <URLTable refreshTrigger={refreshTrigger} />
       </div>
     </div>
   );

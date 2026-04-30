@@ -2,7 +2,11 @@ import { useEffect, useState, useCallback } from 'react';
 import { apiService } from '../services/api';
 import type { URL } from '../services/api';
 
-export default function URLTable() {
+interface URLTableProps {
+  refreshTrigger?: number;
+}
+
+export default function URLTable({ refreshTrigger = 0 }: URLTableProps) {
   const [urls, setUrls] = useState<URL[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -22,7 +26,7 @@ export default function URLTable() {
 
   useEffect(() => {
     fetchURLs();
-  }, [fetchURLs]);
+  }, [fetchURLs, refreshTrigger]);
 
   const copyToClipboard = async (text: string) => {
     try {
