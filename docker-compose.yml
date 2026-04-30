@@ -25,8 +25,11 @@ services:
       context: ./server
       dockerfile: Dockerfile
     container_name: urlhasher-backend
+    env_file:
+      - .env
+      - server/.env
     environment:
-      DATABASE_URL: postgres://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-urlhasher}
+      DATABASE_URL: postgres://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-urlhasher}?sslmode=disable
       PORT: 8080
       BASE_URL: ${BASE_URL:-http://localhost}
       ENVIRONMENT: ${ENVIRONMENT:-production}
