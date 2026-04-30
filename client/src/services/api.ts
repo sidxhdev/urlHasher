@@ -15,7 +15,7 @@ export interface CreateURLResponse {
 
 export const apiService = {
   async shortenURL(url: string): Promise<CreateURLResponse> {
-    const response = await fetch(`${API_URL}/api/shorten`, {
+    const response = await fetch(`${API_URL}/shorten`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export const apiService = {
   },
 
   async getAllURLs(): Promise<URL[]> {
-    const response = await fetch(`${API_URL}/api/urls`);
+    const response = await fetch(`${API_URL}/urls`);
 
     if (!response.ok) {
       throw new Error('Failed to fetch URLs');
@@ -51,7 +51,7 @@ export const apiService = {
 
   async getHealthCheck(): Promise<boolean> {
     try {
-      const response = await fetch(`${API_URL}/api/health`);
+      const response = await fetch(`${API_URL}/health`);
       return response.ok;
     } catch {
       return false;
