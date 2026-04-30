@@ -107,9 +107,9 @@ export default function URLTable() {
                   <td className="px-4 py-3 text-gray-700">{item.click_count}</td>
                   <td className="px-4 py-3">
                     <button
-                      onClick={() => copyToClipboard(item.short_url)}
+                      onClick={() => copyToClipboard(`${window.location.origin}/redirect/${item.short_url}`)}
                       className="px-3 py-1 bg-gray-600 text-white rounded text-xs font-semibold hover:bg-gray-700 transition-colors"
-                      title="Copy short URL"
+                      title="Copy full short URL"
                     >
                       Copy
                     </button>
