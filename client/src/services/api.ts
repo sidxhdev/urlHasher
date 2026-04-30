@@ -23,12 +23,19 @@ export const apiService = {
       body: JSON.stringify({ url }),
     });
 
+    const text = await response.text();
+    
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to shorten URL');
+      console.error('API Error:', response.status, text);
+      throw new Error(text || 'Failed to shorten URL');
     }
 
-    return response.json();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      console.error('JSON Parse Error:', text);
+      throw new Error(`Invalid response: ${text}`);
+    }
   },
 
   async getAllURLs(): Promise<URL[]> {
