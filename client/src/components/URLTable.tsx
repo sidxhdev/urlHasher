@@ -51,64 +51,66 @@ export default function URLTable() {
   };
 
   return (
-    <div className="bg-white p-10 rounded-lg shadow-md">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-800">Recent URLs</h2>
+    <div className="bg-white p-6 md:p-10 rounded-lg shadow-md">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0 mb-4 md:mb-6">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-800">Recent URLs</h2>
         <button
           onClick={fetchURLs}
-          className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+          className="w-full md:w-auto px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-sm md:text-base"
           disabled={loading}
         >
           Refresh
         </button>
       </div>
 
-      {error && <div className="p-3 bg-red-100 text-red-700 border border-red-300 rounded-lg text-sm mb-4">{error}</div>}
+      {error && <div className="p-2 md:p-3 bg-red-100 text-red-700 border border-red-300 rounded-lg text-xs md:text-sm mb-4">{error}</div>}
 
       {loading ? (
-        <div className="text-center py-10 text-gray-600">Loading URLs...</div>
+        <div className="text-center py-8 md:py-10 text-gray-600 text-sm md:text-base">Loading URLs...</div>
       ) : urls.length === 0 ? (
-        <div className="text-center py-10 text-gray-600">No URLs created yet</div>
+        <div className="text-center py-8 md:py-10 text-gray-600 text-sm md:text-base">No URLs created yet</div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto -mx-6 md:mx-0 md:overflow-x-visible">
+          <table className="w-full text-xs md:text-sm">
             <thead className="bg-gray-100 border-b-2 border-gray-300">
               <tr>
-                <th className="px-4 py-3 text-left font-semibold text-gray-800">Sr. No</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-800">Creation Time</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-800">Original URL</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-800">Short URL</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-800">Clicks</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-800">Action</th>
+                <th className="px-3 md:px-4 py-2 md:py-3 text-left font-semibold text-gray-800">Sr.</th>
+                <th className="px-3 md:px-4 py-2 md:py-3 text-left font-semibold text-gray-800 hidden md:table-cell">Time</th>
+                <th className="px-3 md:px-4 py-2 md:py-3 text-left font-semibold text-gray-800">Original</th>
+                <th className="px-3 md:px-4 py-2 md:py-3 text-left font-semibold text-gray-800 hidden lg:table-cell">Short</th>
+                <th className="px-3 md:px-4 py-2 md:py-3 text-left font-semibold text-gray-800 hidden lg:table-cell">Clicks</th>
+                <th className="px-3 md:px-4 py-2 md:py-3 text-left font-semibold text-gray-800">Action</th>
               </tr>
             </thead>
             <tbody>
               {urls.map((item, index) => (
                 <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="px-4 py-3 text-gray-700">{index + 1}</td>
-                  <td className="px-4 py-3 text-gray-700">{formatDate(item.creation_date)}</td>
-                  <td className="px-4 py-3 max-w-sm" title={item.original_url}>
+                  <td className="px-3 md:px-4 py-2 md:py-3 text-gray-700">{index + 1}</td>
+                  <td className="px-3 md:px-4 py-2 md:py-3 text-gray-700 hidden md:table-cell text-xs">
+                    {new Date(item.creation_date).toLocaleDateString()}
+                  </td>
+                  <td className="px-3 md:px-4 py-2 md:py-3 max-w-xs md:max-w-sm" title={item.original_url}>
                     <a
                       href={item.original_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline break-words"
+                      className="text-blue-600 hover:underline break-words text-xs md:text-sm"
                     >
-                      {item.original_url.length > 40
-                        ? item.original_url.substring(0, 40) + '...'
+                      {item.original_url.length > 25
+                        ? item.original_url.substring(0, 25) + '...'
                         : item.original_url}
                     </a>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-3 md:px-4 py-2 md:py-3 hidden lg:table-cell">
                     <code className="bg-gray-100 px-2 py-1 rounded text-gray-800 font-mono text-xs">
                       {item.short_url}
                     </code>
                   </td>
-                  <td className="px-4 py-3 text-gray-700">{item.click_count}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-3 md:px-4 py-2 md:py-3 text-gray-700 hidden lg:table-cell">{item.click_count}</td>
+                  <td className="px-3 md:px-4 py-2 md:py-3">
                     <button
                       onClick={() => copyToClipboard(`${window.location.origin}/redirect/${item.short_url}`)}
-                      className="px-3 py-1 bg-gray-600 text-white rounded text-xs font-semibold hover:bg-gray-700 transition-colors"
+                      className="px-2 md:px-3 py-1 bg-gray-600 text-white rounded text-xs font-semibold hover:bg-gray-700 transition-colors w-full md:w-auto"
                       title="Copy full short URL"
                     >
                       Copy

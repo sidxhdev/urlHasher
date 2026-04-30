@@ -36,29 +36,29 @@ export default function URLInput({ onURLCreated }: URLInputProps) {
   };
 
   return (
-    <div className="bg-white p-10 rounded-lg shadow-md mb-10">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800">Shorten Your URL</h2>
+    <div className="bg-white p-6 md:p-10 rounded-lg shadow-md mb-6 md:mb-10">
+      <h2 className="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-gray-800">Shorten Your URL</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
           <input
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://example.com/very/long/url"
-            className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="flex-1 px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-sm md:text-base"
             disabled={loading}
           />
           <button
             type="submit"
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+            className="px-4 md:px-6 py-2 md:py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-sm md:text-base"
             disabled={loading}
           >
             {loading ? 'Shortening...' : 'Shorten URL'}
           </button>
         </div>
 
-        {error && <div className="p-3 bg-red-100 text-red-700 border border-red-300 rounded-lg text-sm">{error}</div>}
-        {success && <div className="p-3 bg-green-100 text-green-700 border border-green-300 rounded-lg text-sm">{success}</div>}
+        {error && <div className="p-2 md:p-3 bg-red-100 text-red-700 border border-red-300 rounded-lg text-xs md:text-sm">{error}</div>}
+        {success && <div className="p-2 md:p-3 bg-green-100 text-green-700 border border-green-300 rounded-lg text-xs md:text-sm">{success}</div>}
       </form>
     </div>
   );
