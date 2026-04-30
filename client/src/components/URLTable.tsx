@@ -29,8 +29,25 @@ export default function URLTable() {
     return date.toLocaleString();
   };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+  const copyToClipboard = async (text: string) => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        alert('Copied to clipboard!');
+      } else {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('Copied to clipboard!');
+      }
+    } catch (err) {
+      console.error('Copy failed:', err);
+      alert('Failed to copy. Please try again.');
+    }
   };
 
   return (
