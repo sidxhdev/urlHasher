@@ -31,7 +31,7 @@ func LoadConfig() *Config {
 		log.Fatal("DATABASE_URL is required")
 	}
 
-	log.Println("✅ Configuration loaded")
+	log.Println("Configuration loaded")
 	return config
 }
 

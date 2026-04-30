@@ -51,7 +51,7 @@ func main() {
 
 	// Start server (IPv4 + IPv6 safe)
 	addr := "0.0.0.0:" + cfg.Port
-	fmt.Printf("🚀 Server starting on %s\n", addr)
+	fmt.Printf("Server starting on %s\n", addr)
 
 	log.Fatal(http.ListenAndServe(addr, r))
 }

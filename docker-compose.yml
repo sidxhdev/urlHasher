@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: urlhasher-db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-urlhasher}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - urlhasher-network
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: urlhasher-backend
+    environment:
+      DATABASE_URL: postgres://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-urlhasher}
+      PORT: 8080
+      BASE_URL: ${BASE_URL:-http://localhost}
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - urlhasher-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: urlhasher-frontend
+    environment:
+      VITE_API_URL: /api
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - urlhasher-network
+    restart: unless-stopped
+
+volumes:
+  db_data:
+
+networks:
+  urlhasher-network:
+    driver: bridge

@@ -1,0 +1,40 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Go build files
+server/main
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go module cache
+server/go.sum
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node
+client/node_modules/
+client/dist/
+client/.env
+client/.env.local
+client/.env.*.local
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# Build artifacts
+*.o
+*.a
+
+# Test coverage
+coverage/
+*.cover

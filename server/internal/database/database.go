@@ -31,7 +31,7 @@ func InitDB(connStr string) (*sql.DB, error) {
 	db.SetMaxIdleConns(5)
 	db.SetConnMaxLifetime(5 * time.Minute)
 
-	log.Println("✅ Database connected")
+	log.Println("Database connected")
 
 	err = createTables()
 	if err != nil {
@@ -59,13 +59,13 @@ func createTables() error {
 		return fmt.Errorf("error creating tables: %w", err)
 	}
 
-	log.Println("✅ Tables ready")
+	log.Println("Tables ready")
 	return nil
 }
 
 func CloseDB() {
 	if db != nil {
 		db.Close()
-		log.Println("✅ Database closed")
+		log.Println(" Database closed")
 	}
 }
